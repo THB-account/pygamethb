@@ -54,6 +54,9 @@ class Game:
         for y in range(0, HEIGHT, TILESIZE):
             pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
 
+    def center_grid(self):
+        return None
+
     def draw(self):
         self.screen.fill(BGCOLOR)
         self.draw_grid()

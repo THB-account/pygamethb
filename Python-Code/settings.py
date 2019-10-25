@@ -8,8 +8,9 @@ YELLOW = (255, 255, 0)
 
 WIDTH = 1920
 HEIGHT = 1080
+
 FPS = 60
-TITLE = "TestGame"
+TITLE = "Labyrinth"
 BGCOLOR = DARKGREY
 
 TILESIZE = 20
