@@ -18,6 +18,12 @@ class Game:
     def load_data(self):
         game_folder = path.dirname(__file__)
         self.map = Map(path.join(game_folder, 'map.txt'))
+        #Lichteffekte
+        self.fog =  pg.Surface((WIDTH,HEIGHT))
+        self.fog.fill(BLACK)
+        self.light_mask = pg.image.load(path.join(game_folder, LIGHT_MASK)).convert_alpha()
+        self.light_mask = pg.transform.scale(self.light_mask, LIGHT_RADIUS)
+        self.light_rect = self.light_mask.get_rect()
 
     def new(self):
         self.all_sprites = pg.sprite.Group()
@@ -53,6 +59,13 @@ class Game:
             pg.draw.line(self.screen, LIGHTGREY, (x, 0), (x, HEIGHT))
         for y in range(0, HEIGHT, TILESIZE):
             pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
+   
+    def render_fog(self):
+        # die Maske wird auf den Bildschirm gemalt und der Lichtkreis ermöglicht Sicht um den Spieler
+        self.fog.fill(BLACK)
+        self.light_rect.center = self.camera.apply(self.player).center
+        self.fog.blit(self.light_mask, self.light_rect)
+        self.screen.blit(self.fog, (0,0), special_flags = pg.BLEND_MULT)
 
 
     def draw(self):
