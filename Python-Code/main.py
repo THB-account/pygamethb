@@ -62,17 +62,11 @@ class Game:
             pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
    
     def render_fog(self):
-        # die Maske wird auf den Bildschirm gemalt und der Lichtkreis ermöglicht Sicht um den Spieler
-        if self.counter % 15 == 0:
-            self.fog.fill(FLASH_C)
-            self.screen.blit(self.fog, (0, 0), special_flags=pg.BLEND_ADD)
-            self.light_rect.center = self.camera.apply(self.player).center
-            self.fog.blit(self.light_mask, self.light_rect)
-        else
-            self.fog.fill(BLACK)
-            self.light_rect.center = self.camera.apply(self.player).center
-            self.fog.blit(self.light_mask, self.light_rect)
-            self.screen.blit(self.fog, (0,0), special_flags = pg.BLEND_MULT)
+        # die Maske wird auf den Bildschirm gemalt und der Lichtkreis ermöglicht Sicht um den Spieler 
+          self.fog.fill(BLACK)
+          self.light_rect.center = self.camera.apply(self.player).center
+          self.fog.blit(self.light_mask, self.light_rect)
+          self.screen.blit(self.fog, (0,0), special_flags = pg.BLEND_MULT)
 
 
     def draw(self):
