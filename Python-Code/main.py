@@ -13,6 +13,7 @@ class Game:
         pg.display.set_caption(TITLE)
         self.clock = pg.time.Clock()
         pg.key.set_repeat(500, 100)
+        self.counter = 1
         self.load_data()
 
     def load_data(self):
@@ -62,10 +63,16 @@ class Game:
    
     def render_fog(self):
         # die Maske wird auf den Bildschirm gemalt und der Lichtkreis ermöglicht Sicht um den Spieler
-        self.fog.fill(BLACK)
-        self.light_rect.center = self.camera.apply(self.player).center
-        self.fog.blit(self.light_mask, self.light_rect)
-        self.screen.blit(self.fog, (0,0), special_flags = pg.BLEND_MULT)
+        if self.counter % 2 == 0:
+            self.fog.fill(FLASH_C)
+            self.screen.blit(self.fog, (0, 0), special_flags=pg.BLEND_ADD)
+            self.light_rect.center = self.camera.apply(self.player).center
+            self.fog.blit(self.light_mask, self.light_rect)
+        else
+            self.fog.fill(BLACK)
+            self.light_rect.center = self.camera.apply(self.player).center
+            self.fog.blit(self.light_mask, self.light_rect)
+            self.screen.blit(self.fog, (0,0), special_flags = pg.BLEND_MULT)
 
 
     def draw(self):
@@ -77,6 +84,8 @@ class Game:
 
     def events(self):
         for event in pg.event.get():
+            if event.type == pg.USEREVENT:
+                self.counter += 1
             if event.type == pg.QUIT:
                 self.quit()
             if event.type == pg.KEYDOWN:
